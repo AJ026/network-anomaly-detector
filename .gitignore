@@ -2,3 +2,4 @@ ven3/
 __pycache__/
 *.pyc
 .env
+.idea/
