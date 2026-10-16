@@ -1,0 +1,83 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Network Anomaly Detector</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 30px;
+            background: #f3f4f6;
+            color: #111827;
+        }
+
+        h1 {
+            color: #1f2937;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+        }
+
+        th, td {
+            padding: 12px;
+            border: 1px solid #d1d5db;
+            text-align: left;
+        }
+
+        th {
+            background: #1f2937;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background: #f9fafb;
+        }
+
+        .empty {
+            background: white;
+            padding: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Network Anomaly Detector</h1>
+    <p>Stored security alerts from the SQLite database.</p>
+
+    {% if alerts %}
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Timestamp (UTC)</th>
+                <th>Source IP</th>
+                <th>Destination IP</th>
+                <th>Attack Type</th>
+                <th>Severity</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for alert in alerts %}
+            <tr>
+                <td>{{ alert[0] }}</td>
+                <td>{{ alert[1] }}</td>
+                <td>{{ alert[2] }}</td>
+                <td>{{ alert[3] }}</td>
+                <td>{{ alert[4] }}</td>
+                <td>{{ alert[5] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p class="empty">No alerts have been recorded yet.</p>
+    {% endif %}
+</body>
+</html>
