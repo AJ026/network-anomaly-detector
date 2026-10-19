@@ -21,6 +21,9 @@ The project uses Scapy for packet inspection, Python-based detection logic, SQLi
 - Flask
 - SQLite
 - HTML
+- Requests
+- python-dotenv
+- Telegram Bot API
 
 ## Project Structure
 
@@ -49,6 +52,15 @@ network-anomaly-detector/
 
 Create and activate a virtual environment if one does not already exist:
 
+## Telegram Configuration
+
+Telegram notifications require a Telegram bot and a chat ID.
+
+Create a local `.env` file in the project directory with the following variables:
+
+```text
+TELEGRAM_BOT_TOKEN=your_bot_token
+TELEGRAM_CHAT_ID=your_chat_id
 ```bash
 python3 -m venv ven3
 source ven3/bin/activate
@@ -98,6 +110,7 @@ Run the tests from the project directory:
 ./ven3/bin/python3 test_syn_flood.py
 ./ven3/bin/python3 test_database.py
 ./ven3/bin/python3 test_alert_storage.py
+./ven3/bin/python3 test_telegram_notifier.py
 ```
 
 These tests exercise detection logic and database behavior. Synthetic packet tests do not, by themselves, demonstrate detection of a real network attack.
@@ -113,3 +126,5 @@ These tests exercise detection logic and database behavior. Synthetic packet tes
 ## Project Status
 
 The detection logic, SQLite alert storage, and Flask dashboard have been exercised during development. Further live-network testing and improvements to detection accuracy remain possible future work.
+
+- **Telegram notifications:** Sends Telegram alerts when the SYN-flood detector identifies activity that reaches its configured threshold.
