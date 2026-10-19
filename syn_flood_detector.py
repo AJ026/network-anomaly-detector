@@ -2,6 +2,7 @@ import time
 from scapy.layers.inet import IP,TCP
 from scapy.sendrecv import sniff
 from database import initialize_database, save_alert
+from telegram_notifier import send_telegram_alert
 
 syn_tracker = {}
 alerted_pairs =set()
@@ -46,12 +47,18 @@ def packet_callback(packet,current_time=None):
     if syn_count >= SYN_THRESHOLD and key not in alerted_pairs:
         print("!!! POSSIBLE SYN FLOOD !!!")
 
-        save_alert(
+        attack_type = "Possible SYN FLOOD"
+        severity = "High"
+
+        save_alert(source_ip, destination_ip, attack_type, severity)
+
+        send_telegram_alert(
             source_ip,
             destination_ip,
-            "Possible SYN FLOOD",
-            "High"
+            attack_type,
+            severity,
         )
+
         alerted_pairs.add(key)
     if syn_count < SYN_THRESHOLD:
         alerted_pairs.discard(key)
